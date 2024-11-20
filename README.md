@@ -31,4 +31,4 @@ while (stash[i] && stash[i] != "\n")
 if (stash[i] != "\n")
 	doit continuer le read strjoin 13instash
 else
-	doit sortir de la boucle, copier le stash dans line avec le \n inclu, puis substr le stash, et return line.```
+	doit sortir de la boucle, copier le stash dans line avec le \n inclu, puis substr le stash, et return line.
