@@ -6,7 +6,7 @@
 /*   By: cyglardo <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:53:38 by cyglardo          #+#    #+#             */
-/*   Updated: 2024/11/19 13:56:46 by cyglardo         ###   ########.fr       */
+/*   Updated: 2024/11/21 16:50:44 by cyglardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int main(int argc, char **argv)
     	}
 		close(file_descriptor);
 	else
-		printf("Error: please pass file name in argument.");
+		printf("Error: please enter file name.");
     return (0);
 }
