@@ -1,99 +1,137 @@
 #include "get_next_line.h"
 
-static char *update_buffer(buffer)
+int	ft_strlen_(char *s)
 {
-    int i;
-    int j;
-    char    *line;
+	int	length;
 
-    i = 0;
-    while (buffer[i] && buffer[i] != '\n')
-        i ++;
-    if (buffer[i] == NULL)
-    {
-        free(buffer);
-        return (NULL);
-    }
-    line = ft_calloc_((ft_strlen_(buffer) - i + 1), sizeof(char));
-    i ++;
-    j = 0;
-    while (buffer[i])
-        line[j++] = buffer[i++];
-    free(buffer);
-    return (line);
+	length = 0;
+	while (s[length])
+		length ++;
+	return (length);
 }
 
-static char *join_and_free(char *line_buf, char *chunk)
+char	*ft_substr_(char *str, int index)
 {
-    char    *joined;
-
-    joined = ft_strjoin_(line_buf, chunk);
-    free(line_buf);
-    return (joined);
-}
-
-static char	*read_line(int fd, char *line_buf)
-{
-	char	*chunk;
-	int		octets_read;
-
-	if (line_buf == NULL)
-		line_buf = ft_calloc_(1, 1);
-	chunk = ft_calloc_(BUFFER_SIZE + 1, sizeof(char));
-	octets_read = 1;
-	while (octets_read > 0 )
-	{
-		octets_read = read(fd, chunk, BUFFER_SIZE);
-		if (octets_read == -1)
-		{
-			free(chunk);
-			return (NULL);
-		}
-		chunk[octets_read] = 0;
-		line_buf = join_and_free(line_buf, chunk);
-		if (strchr_(chunk, '\n'))
-			break;
-	}
-	free(chunk);
-	return (line_buf);
-}
-
-static char *extract_line(char *buffer)
-{
-	char	*line;
-	int		i;
+	char	*sub;
+	char	len;
+	int		m;
 	
-	if (buffer == NULL)
+	len = ft_strlen_(str);
+	sub = malloc((len - index) * sizeof(char));
+	if (sub == NULL)
 		return (NULL);
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
-		i ++;
-	line = ft_calloc_(i + 2, sizeof(char));
-	i = 0;
-	while (buffer[i] && buffer[i] != '\n')
+	m = 0;
+	while (str[index])
 	{
-		line[i] = buffer[i];
-		i ++;
+		sub[m] = str[index];
+   		m ++;
+		index ++;
 	}
-	if (buffer[i] && buffer[i] == '\n')
+	sub[index] = '\0';
+	free (str);
+	return (sub);
+}
+
+char	*ft_strlcpy_(char *dest, char *src, int len)
+{
+	int	n;
+
+	n = 0;
+	while (src[n] && n < len)
 	{
-		i ++;
-		line[i] = '\n';
+		dest[n] = src[n];
+		n ++;
 	}
-	return (line);
+	dest[n] = '\0';
+	return (dest);
+}
+
+char	*ft_strjoin_(char *dest, char *src)
+{
+	char	*joined;
+	int		len;
+	int		k;
+	int		l;
+
+	len = ft_strlen_(dest) + ft_strlen_(src);
+	joined = malloc(len * sizeof(char));
+	if (joined == NULL)
+		return (NULL);
+	k = 0;
+	while (dest[k])
+	{
+		joined[k] = dest[k];
+		k ++;
+	}
+	l = 0;
+	while (src[l])
+	{
+		joined[k + l] = src[l];
+		l ++;
+	}
+	joined[k + l] = '\0';
+	return (joined);
+}
+
+int		end_of_line(char *chunk)
+{
+	int	i;
+
+	i = 0;
+	while (chunk[i] && chunk[i] != '\n')
+		i ++;
+	if (chunk[i] == '\0')
+		i = -1;
+	return (i);
+}
+
+char	*ft_calloc_(int nelem, int elsize)
+{
+	char	*str;
+	int		j;
+
+	str = malloc(nelem * elsize);
+	if (str == NULL)
+		return (NULL);
+	j = 0;
+	while (str[j])
+	{
+		str[j] = '\0';
+		j ++;
+	}
+	return (str);
 }
 
 char    *get_next_line(int fd)
 {
-    static char *buffer;
-    char        *line;
+    static char *last_line;
+	char		*buffer;
+    char        *current_line;
+	int			eol;
 
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
         return (NULL);
-    buffer = read_line(fd, buffer);
-    if (buffer == NULL)
-        return (NULL);
-    line = extract_line(buffer);
-    buffer = update_buffer(buffer);
-    return (line);
+	if (last_line == NULL)
+		last_line = ft_calloc_(1, 1);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (buffer == NULL)
+		return (NULL);
+	while (end_of_line(last_line) == -1)
+	{
+		read(fd, buffer, BUFFER_SIZE);  // gerer si read renvoie -1? ou 0?
+		last_line = ft_strjoin_(last_line, buffer);
+	}
+	free(buffer);
+	eol = end_of_line(last_line);
+	current_line = malloc((eol + 1) * sizeof(char));
+	if (current_line == NULL)
+		return (NULL);
+	current_line = ft_strlcpy_(current_line, last_line, eol);
+	last_line = ft_substr_(last_line, eol);
+	return (current_line);
 }
+
+    /*last_line = read_line(fd, last_line);
+    current_line = extract_line(last_line);
+    last_line = update_buffer(last_line);
+    return (current_line);*/
