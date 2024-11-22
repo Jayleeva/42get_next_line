@@ -4,15 +4,22 @@ Projet du 2ème cercle 42
 # En gros
 ## Dans le main
 Utiliser open() pour ouvrir un fichier.
+
 Appeler get_next_line jusqu'à ce que le fichier soit lu en entier.
+
 Utiliser putstr() pour imprimer chaque ligne une à une.
+
 Utiliser close() pour fermer le fichier.
 
 ## Dans get_next_line
 Utiliser la fonction read(int fd, char *buffer, int bytes_to_read) pour stocker les bytes lus dans un buffer. 
+
 Utiliser strjoin() pour appondre les nouveaux bytes lus aux précédents dans une chaîne de caractères de réserve STATIQUE (stash).
+
 Utiliser strlcpy()? pour copier le stash dans une chaîne de caractères qui aura valeur de retour.
+
 Utiliser strchr()? pour obtenir l'emplacement du prochain \n. //comment gérer fin de fichier?
+
 Utiliser substr() pour garder en stash que les bytes lus après un \n. Comme statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
 # Pseudo-code:
