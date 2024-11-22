@@ -16,9 +16,9 @@ Utiliser la fonction read(int fd, char *buffer, int bytes_to_read) pour stocker 
 
 Utiliser strjoin() pour appondre les nouveaux bytes lus aux précédents dans une chaîne de caractères de réserve STATIQUE (stash).
 
-Utiliser strlcpy()? pour copier le stash dans une chaîne de caractères qui aura valeur de retour.
-
 Utiliser strchr()? pour obtenir l'emplacement du prochain \n. //comment gérer fin de fichier?
+
+Utiliser strlcpy()? pour copier le stash jusqu'au prochain \n (ou fin de fichier) dans une chaîne de caractères qui aura valeur de retour.
 
 Utiliser substr() pour garder en stash que les bytes lus après un \n. Comme statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
