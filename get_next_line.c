@@ -20,7 +20,6 @@ char    *get_next_line(int fd)
 	char		*buffer;
     char        *line;
 	char		*temp;
-	//char		*temp2;
 	int			eol;
 
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -28,7 +27,7 @@ char    *get_next_line(int fd)
         return (NULL);
 	}
 	if (stash == NULL)
-		stash = ft_calloc_(1, sizeof(char));
+		stash = ft_strdup_("");
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
@@ -40,19 +39,10 @@ char    *get_next_line(int fd)
 		free(temp);
 	}
 	free(buffer);
-	printf("-----\n");
-	printf("%s", stash);
-	printf("\n-----\n");
-
 	eol = end_of_line(stash);
-	write(1, &stash[eol -1], 1);
-	line = ft_calloc_((size_t)33, sizeof(char));
-	printf("%zu\n", ft_strlen_(line));
-	//line = ft_strlcpy_(line, stash, eol);
-	//temp2 = stash;
-	//stash = ft_substr_(stash, eol);
-	//free(temp2);*/
-	//printf("%s", line);
-	//return ("test");
+	line = ft_substr(stash, 0, eol);
+	temp = stash;
+	stash = ft_substr(stash, eol +1, ft_strlen_(stash) - eol);
+	free(temp);
 	return(line);
 }

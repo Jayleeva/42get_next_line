@@ -55,6 +55,10 @@ int main(int argc, char **argv)
 		}
 		next_line = get_next_line(file_descriptor);
 		printf("%s\n", next_line);
+		next_line = get_next_line(file_descriptor);
+		printf("%s\n", next_line);
+		next_line = get_next_line(file_descriptor);
+		printf("%s\n", next_line);
         /*w = 1;
 		while (w == 1)
 		{

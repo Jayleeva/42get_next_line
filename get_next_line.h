@@ -5,10 +5,9 @@
 
 char    		*get_next_line(int fd);
 size_t			ft_strlen_(const char *str);
-void			*ft_calloc_(size_t nelem, size_t elsize);
+char            *ft_strdup_(const char *src);
 char			*ft_strjoin_(char const *s1, char const *s2);
-char			*ft_substr_(char *str, int index);
-char			*ft_strlcpy_(char *dest, char *src, int len);
+char			*ft_substr(const char *s, unsigned int start, size_t len);
 
 #endif
 
