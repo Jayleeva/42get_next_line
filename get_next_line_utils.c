@@ -13,7 +13,7 @@ void	*ft_calloc_(size_t nelem, size_t elsize)
 	i = 0;
 	while (i < nelem * elsize)
 	{
-		ptr[i] = 0;
+		ptr[i] = 'a';
 		i ++;
 	}
 	return ((void *)ptr);

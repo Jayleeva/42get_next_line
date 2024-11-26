@@ -13,5 +13,5 @@ char			*ft_strlcpy_(char *dest, char *src, int len);
 #endif
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 3
+# define BUFFER_SIZE 5
 #endif

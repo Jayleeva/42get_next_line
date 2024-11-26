@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 {
 	int     file_descriptor;
 	char	*next_line;
-    int     w;
+    //int     w;
 
 	if (argc > 1)
 	{
@@ -53,7 +53,9 @@ int main(int argc, char **argv)
 			printf("Error: could not open file.");
 			return (0);
 		}
-        w = 1;
+		next_line = get_next_line(file_descriptor);
+		printf("%s\n", next_line);
+        /*w = 1;
 		while (w == 1)
 		{
 			next_line = get_next_line(file_descriptor);
@@ -65,8 +67,9 @@ int main(int argc, char **argv)
 			//printf("%s", next_line);
 			free(next_line);
 			next_line = NULL;
-		}
+		}*/
 		close(file_descriptor);
+		free(next_line);
 	}
 	else
 		printf("Error: please enter file name.");
