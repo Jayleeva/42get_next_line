@@ -12,5 +12,5 @@ char			*ft_substr(const char *s, unsigned int start, size_t len);
 #endif
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
+# define BUFFER_SIZE 8
 #endif
