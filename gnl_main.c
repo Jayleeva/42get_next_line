@@ -6,7 +6,7 @@
 /*   By: cyglardo <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:53:38 by cyglardo          #+#    #+#             */
-/*   Updated: 2024/11/25 13:29:39 by cyglardo         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:00:06 by cyglardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,10 @@ int main(int argc, char **argv)
 		{
 			next_line = get_next_line(file_descriptor);
 			if (next_line == NULL)
-			{
-				next_line = "(null)";
-				w = 0;
-			}
+				break;
 			printf("%s", next_line);
-			free(next_line);
 			next_line = NULL;
+			free(next_line);
 		}
 		close(file_descriptor);
 		free(next_line);
