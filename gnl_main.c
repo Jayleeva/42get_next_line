@@ -19,7 +19,6 @@ int main(int argc, char **argv)
 {
 	int     file_descriptor;
 	char	*next_line;
-	int     w;
 
 	if (argc > 1)
 	{
@@ -27,7 +26,7 @@ int main(int argc, char **argv)
 		if (file_descriptor < 0)
 		{
 			printf("Error: could not open file.");
-			return (0);
+			return (1);
 		}
 		/*next_line = get_next_line(file_descriptor);
 		printf("%s\n", next_line);
@@ -38,15 +37,14 @@ int main(int argc, char **argv)
 		next_line = get_next_line(file_descriptor);
 		printf("%s\n", next_line);*/
 		
-		w = 1;
-		while (w == 1)
+		while (1)
 		{
 			next_line = get_next_line(file_descriptor);
 			if (next_line == NULL)
 				break;
 			printf("%s", next_line);
-			next_line = NULL;
 			free(next_line);
+			next_line = NULL;
 		}
 		close(file_descriptor);
 		free(next_line);
