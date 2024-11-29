@@ -7,7 +7,7 @@ Utiliser open() pour ouvrir un fichier.
 
 Appeler get_next_line jusqu'à ce que le fichier soit lu en entier.
 
-Utiliser putstr() pour imprimer chaque ligne une à une.
+Utiliser printf() pour imprimer chaque ligne une à une. Utiliser free() pour libérer chaque ligne après impression, puis les réinitialiser à NULL.
 
 Utiliser close() pour fermer le fichier.
 
@@ -16,11 +16,11 @@ Utiliser la fonction read(int fd, char *buffer, int bytes_to_read) pour stocker 
 
 Utiliser strjoin() pour appondre les nouveaux bytes lus aux précédents dans une chaîne de caractères de réserve STATIQUE (stash).
 
-Utiliser strchr()? pour obtenir l'emplacement du prochain \n. //comment gérer fin de fichier?
+Utiliser strchr() pour vérifier s'il y a un \n dans les bytes lus.
 
-Utiliser strlcpy()? pour copier le stash jusqu'au prochain \n (ou fin de fichier) dans une chaîne de caractères qui aura valeur de retour.
+Utiliser substr() pour copier le stash jusqu'au prochain \n ou jusqu'à la fin du fichier dans une chaîne de caractères qui aura valeur de retour.
 
-Utiliser substr() pour garder en stash que les bytes lus après un \n. Comme statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
+Utiliser substr() pour garder en stash que les bytes lus après un \n. Comme elle est statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
 # Pseudo-code:
 
