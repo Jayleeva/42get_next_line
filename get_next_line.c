@@ -6,7 +6,7 @@
 /*   By: cyglardo <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 12:16:25 by cyglardo          #+#    #+#             */
-/*   Updated: 2024/12/02 14:47:31 by cyglardo         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:50:12 by cyglardo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*read_line(int fd, char *stash)
 		if (read_bytes == -1)
 		{
 			//stash = update_stash(stash, end_of_line(stash)); // je m'assure que le stash soit mis a jour malgre le probleme de lecture --> change rien en l'etat
-			return (free(buffer), buffer = NULL, free(stash), stash = NULL, NULL); // free et clean le buffer ET OU la static ici ne change rien, pourquoi ????
+			return (free(buffer), free(stash), stash = NULL, NULL); // free et clean le buffer ET OU la static ici ne change rien, pourquoi ????
 		}
 		else if (read_bytes == 0)
 			break ;
@@ -46,8 +46,10 @@ static char	*extract_line(char *stash, int eol)
 {
 	char	*line;
 
-	if (!stash)
-		return (NULL);
+	if (!stash || !*stash)
+		return (NULL); // je libere et clean le stash si son adresse n'existe pas/plus?? --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
+	//if (!stash)
+	//	return (NULL);
 	if (stash[eol] == '\0')
 	{
 		line = ft_strdup_(stash);
@@ -62,12 +64,12 @@ char	*update_stash(char *stash, int eol)
 {
 	char	*temp;
 
-	if (!stash)
+	if (!stash || !*stash)
 		return (NULL);
-	temp = stash;
-	stash = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol);
-	free(temp);
-	return (stash);
+	//temp = stash;
+	temp = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol);
+	free(stash);
+	return (temp);
 }
 
 int	end_of_line(char *s)
@@ -87,20 +89,20 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0) // si fd ou BUFFER_SIZE invalides, ou si?? on arrete tout -> ABSOLUMENT NECESSAIRE
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (read(fd, 0, 0) < 0) // si fd ou BUFFER_SIZE invalides, ou si?? on arrete tout -> ABSOLUMENT NECESSAIRE
+		return (free(stash), NULL);
 	if (stash == NULL)
 		stash = ft_strdup_("");
-//	if (read(fd, stash, BUFFER_SIZE) == -1)    //je libere et clean le stash si le read echoue --> casse tout
-//		return (free(stash), stash = NULL, NULL);
 	stash = read_line(fd, stash);
-	if (!*stash)
-		return (free(stash), stash = NULL, NULL); // je libere et clean le stash si son adresse n'existe pas/plus?? --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
+	//if (!stash)
+	//	return (NULL);
 	line = extract_line(stash, end_of_line(stash));
 	if (!line)
-		return (free(line), free(stash), stash = NULL, NULL); // je libere et clean le stash si la ligne est vide --> ca ne change rien
+		return (free(line), free(stash), stash = NULL, NULL); // je libere et clean le stash si la ligne est vide 
 	stash = update_stash(stash, end_of_line(stash));
-	if (!stash)	
-		return (free(line), line = NULL, free(stash), NULL);   //je libere le stash s'il est vide // si l'adresse n'existe pas/plus?  --> ca ne change rien
+	//if (!stash)	
+	//	return (free(line), line = NULL, free(stash), NULL);   //je libere le stash s'il est vide // si l'adresse n'existe pas/plus?  --> ca ne change rien
 	return (line);
 }
