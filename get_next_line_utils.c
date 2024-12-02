@@ -1,6 +1,18 @@
 #include "get_next_line.h"
 
-//read(int fd, void *buf, size_t count)
+int	strchr_(char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);	
+		i ++;
+	}
+	return (-1);
+}
 
 size_t	ft_strlen_(const char *str)
 {
@@ -30,21 +42,25 @@ char	*ft_strdup_(const char *src)
 	return (copy);
 }
 
-char    *ft_substr(const char *s, unsigned int start, size_t len)
+char    *ft_substr_(const char *s, unsigned int start, size_t len)
 {
-    char    *ret;
-    char    *src;
-    size_t    i;
+	char	*result;
+	size_t	i;
+	size_t	j;
 
-    ret = malloc(len + 1);
-    if (!ret)
-        return (0);
-    src = (char *)s + start;
-    i = 0;
-    while (*src && i < len)
-        ret[i++] = *src++;
-    ret[i] = 0;
-    return (ret);
+	result = malloc((len + 1) * sizeof(char));
+	if (result == NULL)
+		return (NULL);
+	i = start;
+	j = 0;
+	while (i < start + len)
+	{
+        	result[j] = s[i];
+		j ++;
+		i ++;
+	}
+	result[j] = '\0';
+	return (result);
 }
 
 char	*ft_strjoin_(char const *s1, char const *s2)
