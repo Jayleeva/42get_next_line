@@ -23,14 +23,11 @@ static char	*read_line(int fd, char *stash)
 	if (buffer == NULL)
 		return (NULL);
 	read_bytes = 1;
-	while (read_bytes > 0 && (!stash || strchr_(stash, '\n') == -1))
+	while (read_bytes > 0 && (end_of_line(stash) != ft_strlen_(stash) || strchr_(stash, '\n' == -1))) // (!*stash || strchr_(stash, '\n') == -1)) //tant que je peux lire ET tant que je n'ai pas trouvé de '\0' OU de '\n' dans stash
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
-		{
-			//stash = update_stash(stash, end_of_line(stash)); // je m'assure que le stash soit mis a jour malgre le probleme de lecture --> change rien en l'etat
-			return (free(buffer), free(stash), stash = NULL, NULL); // free et clean le buffer ET OU la static ici ne change rien, pourquoi ????
-		}
+			return (free(buffer), NULL); // free et clean le buffer ET OU la static ici ne change rien, pourquoi ????
 		else if (read_bytes == 0)
 			break ;
 		buffer[read_bytes] = '\0'; //je m'assure que le buffer soit fermé pour pas que le dernier stash soit rempli d'extra buffers pendant le strjoin
@@ -46,13 +43,11 @@ static char	*extract_line(char *stash, int eol)
 {
 	char	*line;
 
-	if (!stash || !*stash)
-		return (NULL); // je libere et clean le stash si son adresse n'existe pas/plus?? --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
-	//if (!stash)
-	//	return (NULL);
 	if (stash[eol] == '\0')
 	{
 		line = ft_strdup_(stash);
+		//stash = ft_strdup_(""); -> cree des leaks, meme si j'utilise une temp. NECESSAIRE de clean stash ici car fin de ligne? 
+		//free(stash); --> "pointer being freed was not allocated" 
 		stash = NULL;
 		return (line);
 	}
@@ -64,20 +59,16 @@ char	*update_stash(char *stash, int eol)
 {
 	char	*temp;
 
-	if (!stash || !*stash)
-		return (NULL);
-	//temp = stash;
-	temp = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol);
-	free(stash);
-	return (temp);
+	temp = stash;
+	stash = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol);
+	free(temp);
+	return (stash);
 }
 
-int	end_of_line(char *s)
+size_t	end_of_line(char *s)
 {
-	int	eol;
+	size_t	eol;
 
-	if (!s)
-		return (0);
 	eol = 0;
 	while (s[eol] && s[eol] != '\n')
 		eol ++;
@@ -89,20 +80,24 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0) // || read(fd, 0, 0) < 0)  // si fd ou BUFFER_SIZE invalides, ou si (pas autorisation de read?) on arrete tout -> ABSOLUMENT NECESSAIRE
+		return (NULL);   //si je laisse le test de read avec le test de fd et BUFFER_SIZE et ne fais que retourner NULL en cas d'erreur, francinette me suggère de clear ma static quand read == -1. Si je le mets à part et ajoute un free(stash) dans le return, francinette me dit que je réutilise un truc déjà free??? alors que y a return et qu'on sort donc de la fonction??????? jpp????
+	if (read(fd, 0, 0) < 0)
+	{
+		free(stash);
+		stash = NULL;
 		return (NULL);
-	if (read(fd, 0, 0) < 0) // si fd ou BUFFER_SIZE invalides, ou si?? on arrete tout -> ABSOLUMENT NECESSAIRE
-		return (free(stash), NULL);
+	}
 	if (stash == NULL)
 		stash = ft_strdup_("");
 	stash = read_line(fd, stash);
-	//if (!stash)
-	//	return (NULL);
+	if (!*stash)
+		return (free(stash), stash = NULL, NULL); // je libere et clean le stash si pointe sur un '\0'? --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
 	line = extract_line(stash, end_of_line(stash));
-	if (!line)
-		return (free(line), free(stash), stash = NULL, NULL); // je libere et clean le stash si la ligne est vide 
+	//if (!line) --> change rien. Si je mets (!*line) à la place, change rien non plus.
+	//	return (free(line), free(stash), stash = NULL, NULL); 
 	stash = update_stash(stash, end_of_line(stash));
-	//if (!stash)	
-	//	return (free(line), line = NULL, free(stash), NULL);   //je libere le stash s'il est vide // si l'adresse n'existe pas/plus?  --> ca ne change rien
+	//if (!stash) --> change rien. Si je mets (!*stash) à la place, leak.
+	//	return (free(stash), stash = NULL, NULL);
 	return (line);
 }

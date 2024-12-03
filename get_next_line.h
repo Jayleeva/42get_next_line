@@ -4,9 +4,9 @@
 # include <stdlib.h>
 
 char		*get_next_line(int fd);
-int		end_of_line(char *s);
+size_t		end_of_line(char *s);
 char		*update_stash(char *stash, int eol);
-int		strchr_(char *s, char c);
+size_t		strchr_(char *s, char c);
 size_t		ft_strlen_(const char *str);
 char		*ft_strdup_(const char *src);
 char		*ft_strjoin_(char const *s1, char const *s2);
