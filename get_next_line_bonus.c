@@ -11,25 +11,25 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 static char	*read_line(int fd, char *stash)
 {
-	char		*buffer;
+	char	*buffer;
 	int		read_bytes;
-	char		*temp;
-	
+	char	*temp;
+
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer == NULL)
-		return (NULL);
+		return (free(stash), NULL);
 	read_bytes = 1;
-	while (read_bytes > 0 && (!stash || strchr_(stash, '\n') == -1))
+	while (read_bytes > 0 && (!*stash || strchr_(stash, '\n') == -1)) 
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (free(buffer), NULL);
+			return (free(buffer), free(stash), NULL);
 		else if (read_bytes == 0)
-			break;
+			break ;
 		buffer[read_bytes] = '\0';
 		temp = stash;
 		stash = ft_strjoin_(stash, buffer);
@@ -53,33 +53,39 @@ static char	*extract_line(char *stash, int eol)
 	return (line);
 }
 
-static char	*update_stash(char *stash, int eol)
+char	*update_stash(char *stash, int eol)
 {
 	char	*temp;
-	
+
 	temp = stash;
-	stash = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol); 
+	stash = ft_substr_(stash, eol +1, ft_strlen_(stash) - eol);
 	free(temp);
 	return (stash);
 }
 
-char    *get_next_line(int fd)
+ssize_t	end_of_line(char *s)
+{
+	ssize_t	eol;
+
+	eol = 0;
+	while (s[eol] && s[eol] != '\n')
+		eol ++;
+	return (eol);
+}
+
+char	*get_next_line(int fd)
 {
 	static char	*stash[MAX_FD];
 	char		*line;
-	int		eol;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	if (stash[fd] == NULL)
 		stash[fd] = ft_strdup_("");
 	stash[fd] = read_line(fd, stash[fd]);
-	if (!*stash[fd])
-		return (NULL);
-	eol = 0;
-	while (stash[fd][eol] && stash[fd][eol] != '\n')
-		eol ++;
-	line = extract_line(stash[fd], eol);
-	stash[fd] = update_stash(stash[fd], eol);
+	if (!stash[fd] || !*stash[fd])
+		return (free(stash[fd]), stash[fd] = NULL, NULL);
+	line = extract_line(stash[fd], end_of_line(stash[fd]));
+	stash[fd] = update_stash(stash[fd], end_of_line(stash[fd]));
 	return (line);
 }
