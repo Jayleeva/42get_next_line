@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 		while (1)
 		{
 			next_line = get_next_line(file_descriptor);
-			if (next_line == NULL)
+			 if (next_line == NULL)
 				break;
 			printf("%s", next_line);
 			free(next_line);

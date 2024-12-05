@@ -1,8 +1,8 @@
 #include "get_next_line.h"
 
-size_t	strchr_(char *s, char c)
+ssize_t	strchr_(char *s, char c)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	while (s[i])
@@ -14,9 +14,9 @@ size_t	strchr_(char *s, char c)
 	return (-1);
 }
 
-size_t	ft_strlen_(const char *str)
+ssize_t	ft_strlen_(const char *str)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	while (str[i])
