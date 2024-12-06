@@ -22,16 +22,16 @@ static char	*read_line(int fd, char *stash)
 	if (buffer == NULL)
 		return (free(stash), NULL);
 	read_bytes = 1;
-	while (read_bytes > 0 && (!*stash || strchr_(stash, '\n') == -1)) // (end_of_line(stash) != ft_strlen_(stash) MARCHE PAS //tant que je peux lire ET tant que je n'ai pas trouvé de '\0' OU de '\n' dans stash
+	while (read_bytes > 0 && (!*stash || strchr_(stash, '\n') == -1)) //tant que je peux lire ET tant que je n'ai pas trouvé de '\0' OU de '\n' dans stash
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (free(buffer), free(stash), NULL); // free et clean le buffer ET OU la static ici ne change rien, pourquoi ????
+			return (free(buffer), free(stash), NULL);
 		else if (read_bytes == 0)
 			break ;
-		buffer[read_bytes] = '\0'; //je m'assure que le buffer soit fermé pour pas que le dernier stash soit rempli d'extra buffers pendant le strjoin
+		buffer[read_bytes] = '\0'; 
 		temp = stash;
-		stash = ft_strjoin_(stash, buffer); //je donne l'adresse pointée par stash à une temporaire pour pouvoir la free après avoir réalloué avec strjoin
+		stash = ft_strjoin_(stash, buffer); 
 		free(temp);
 	}
 	free(buffer);
@@ -77,13 +77,13 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0) // || read(fd, 0, 0) < 0)  // si fd ou BUFFER_SIZE invalides on arrete tout -> ABSOLUMENT NECESSAIRE
-		return (NULL);   //si je laisse le test de read avec le test de fd et BUFFER_SIZE et ne fais que retourner NULL en cas d'erreur, francinette me suggère de clear ma static quand read == -1. Si je le mets à part et ajoute un free(stash) dans le return, francinette me dit que je réutilise un truc déjà free??? alors que y a return et qu'on sort donc de la fonction??????? jpp????
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (stash == NULL)
 		stash = ft_strdup_("");
 	stash = read_line(fd, stash);
 	if (!stash || !*stash)
-		return (free(stash), stash = NULL, NULL); // je libere et clean le stash si pointe sur un '\0'? --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
+		return (free(stash), stash = NULL, NULL); // je libere et clean le stash s'il est vide || si pointe sur un '\0' --> ABSOLUMENT NECESSAIRE DE FREE et CLEAN ICI
 	line = extract_line(stash, end_of_line(stash));
 	stash = update_stash(stash, end_of_line(stash));
 	return (line);
