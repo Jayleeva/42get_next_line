@@ -66,7 +66,7 @@ Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme
 ## Dans get_next_line.h
 Si vous devez utiliser plusieurs define (c'est le cas pour ce projet), ils doivent être compris à l'intérieur du define général du header (avec une indentation en plus) pour passer la norminette. Sinon, elle affiche un message d'erreur et s'arrête.
 ```
-# ifndef HEADER_NAME_H
+#ifndef HEADER_NAME_H
 # define HEADER_NAME_H
 
 # ifndef VAR_NAME
