@@ -31,7 +31,13 @@ On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par r
 ## Comment nettoyer une variable allouée qu'on compte réallouer
 - D'abord la free().
 - PUIS lui assigner NULL (ou 0 pour un int).
-Si on assigne NULL avant, on ne peut plus la free(). 
+Si on assigne NULL avant, on ne peut plus la free().
+
+## Utiliser des temporaires pour réallouer sans leaks
+Les temporaires prennent l'adresse actuelle de la variable, et on les free() une fois la nouvelle adresse reçue:
+```temp = allocated_var;
+allocated_var = allocating_memory_function()
+free(temp);```
 
 # En gros
 ## Dans le main
@@ -53,3 +59,8 @@ Utiliser **strchr()** pour vérifier s'il y a un \n dans les bytes lus.
 Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la fin du fichier dans une chaîne de caractères qui aura valeur de retour.
 
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
+
+# ATTENTION
+La difficulté majeure dans ce projet consiste à gérer les **leaks**. Vous en aurez sans doute beaucoup et peinerez certainement à identifier d'où ils viennent. N'oubliez pas:
+- Des leaks se créent lors de la réallocation: par ex, strdup(), strjoin(), substr() utilisent malloc(). Si vous faites appel à ces fonctions plusieurs fois sur la même variable, il faut la nettoyer entre chaque appel, ou utiliser des temporaires.
+
