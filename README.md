@@ -24,7 +24,7 @@ Si on assigne NULL avant, on ne peut plus la free().
 
 # En gros
 ## Dans le main
-Utiliser open() pour ouvrir un fichier.
+Utiliser open() pour ouvrir un fichier en mode lecture seulement: ``open(file_name, O_RDONLY)``. Stocker la valeur dans la variable du file descriptor. Vérifier si cette valeur est valide.
 
 Appeler get_next_line tant que le fichier n'a pas été lu en entier.
 
