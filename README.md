@@ -71,7 +71,8 @@ Attention, cela nécessite d'ajouter un `ifndef` à votre header, qui définira 
 # ATTENTION
 La difficulté majeure dans ce projet consiste à gérer les **leaks**. N'oubliez pas:
 - La commande ``leaks --atExit -- ./your_program`` à l'exécution vous permet de savoir s'il y a des leaks et si oui, de combien.
-- Des leaks se créent lors de la réallocation: par ex, strdup(), strjoin(), substr() utilisent malloc(). Si vous faites appel à ces fonctions plusieurs fois sur la même variable, il faut la nettoyer entre chaque appel, ou utiliser des temporaires.
-- Lorsque l'on passe une variable à une autre fonction, on en crée en réalité une copie; il faut donc aussi free() la copie.
-- Utiliser ``if (read(fd, 0, 0) < 0)`` au lancement de votre get_next_line pour gérer les cas où le fichier ne serait pas ou plus lisible semble causer problème. Utilisez plutôt ``if (read(fd, buffer, BUFFER_SIZE) == -1)`` dans votre boucle de lecture: cela prend en charge le cas ET vous permet de free() le stash proprement.
+- Des leaks se créent lors de la réallocation: par ex, strdup(), strjoin(), substr() utilisent **malloc()**. Si vous faites appel à ces fonctions plusieurs fois sur la même variable, il faut la nettoyer entre chaque appel, ou utiliser des temporaires.
+- Dès qu'une fonction return NULL, il faut free() ce qui a été malloc() dedans.
+- Lorsque l'on passe une variable à une autre fonction, on en crée en réalité une copie; il faut donc aussi free() la copie, même si on a free() l'originale.
+- Utiliser ``if (read(fd, 0, 0) < 0)`` au lancement de votre get_next_line pour gérer les cas où le fichier ne serait pas ou plus lisible semble causer problème. Utilisez plutôt ``if (read(fd, buffer, BUFFER_SIZE) == -1)`` dans votre boucle de lecture: cela prend en charge le cas ET vous permet de free() votre statique proprement.
 
