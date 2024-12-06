@@ -25,7 +25,7 @@ Variable "tampon" qui permet de stocker temporairement des valeurs entre 2 proce
 
 # Variable statique
 Une variable statique a la particularité de conserver sa valeur d'un appel à l'autre de la fonction où elle est déclarée. Pour déclarer une statique, écrire ``static var_type	var_name;``. 
-On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par read() après un retour à la ligne ('\n').
+On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par read() après un retour à la ligne ``('\n')``.
 
 # Comment nettoyer une variable statique allouée
 - D'abord la free().
