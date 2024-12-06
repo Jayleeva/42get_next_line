@@ -64,6 +64,7 @@ Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la f
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
 # ATTENTION
-La difficulté majeure dans ce projet consiste à gérer les **leaks**. Vous en aurez sans doute beaucoup et peinerez certainement à identifier d'où ils viennent. N'oubliez pas:
+La difficulté majeure dans ce projet consiste à gérer les **leaks**. N'oubliez pas:
 - Des leaks se créent lors de la réallocation: par ex, strdup(), strjoin(), substr() utilisent malloc(). Si vous faites appel à ces fonctions plusieurs fois sur la même variable, il faut la nettoyer entre chaque appel, ou utiliser des temporaires.
+- La commande ``leaks --atExit -- ./your_program`` à l'exécution vous permet de savoir s'il y a des leaks et si oui, de combien. 
 
