@@ -28,13 +28,13 @@ Variable "tampon" qui permet de stocker temporairement des valeurs entre 2 proce
 Une variable statique a la particularité de conserver sa valeur d'un appel à l'autre de la fonction où elle est déclarée. Pour déclarer une statique, écrire ``static var_type	var_name;``. 
 On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par read() après un retour à la ligne ``('\n')``.
 
-## Comment nettoyer une variable allouée qu'on compte réallouer
+## Comment nettoyer une variable allouée qu'on compte réallouer (sans leaks)
 - D'abord la free().
 - PUIS lui assigner NULL (ou 0 pour un int).
 
 Si on assigne NULL avant, on ne peut plus la free().
 
-## Utiliser des temporaires pour réallouer sans leaks
+## Utiliser des temporaires pour réallouer (sans leaks)
 Les temporaires prennent l'adresse actuelle de la variable, et on les free() une fois la nouvelle adresse reçue:
 ```
 temp = allocated_var;
