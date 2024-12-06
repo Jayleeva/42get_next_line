@@ -63,8 +63,14 @@ Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la f
 
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
+# Bonus
+Les bonus de ce projet sont, pour une fois, assez accessibles. Pour permettre à votre fonction de jongler entre plusieurs fichiers, il suffit de faire de votre statique non pas un `char*` mais bien un `char**`. Ainsi, vous pouvez y stocker les lignes de plusieurs fichiers. Faites les modifications nécessaires dans votre fonction get_next_line(), en précisant ``var_static[fd]`` partout où vous aviez ``var_static`` et en donnant une taille max à votre tableau (= le nombre max de fichiers lisibles en même temps) lors de la déclaration, et voilà.
+
+Attention, cela nécessite d'ajouter un ifndef à votre Makefile, qui définira la valeur du nombre maximal de fichiers gérables par votre fonction. Ce nombre varie en fonction de l'ordinateur sur lequel elle est appelée. Pour vous assurer que votre fonction bonus fonctionne sur chaque ordinateur, utilisez .
+
 # ATTENTION
 La difficulté majeure dans ce projet consiste à gérer les **leaks**. N'oubliez pas:
+- La commande ``leaks --atExit -- ./your_program`` à l'exécution vous permet de savoir s'il y a des leaks et si oui, de combien.
 - Des leaks se créent lors de la réallocation: par ex, strdup(), strjoin(), substr() utilisent malloc(). Si vous faites appel à ces fonctions plusieurs fois sur la même variable, il faut la nettoyer entre chaque appel, ou utiliser des temporaires.
-- La commande ``leaks --atExit -- ./your_program`` à l'exécution vous permet de savoir s'il y a des leaks et si oui, de combien. 
+- Utiliser ``if (read(fd, 0, 0) < 0)`` au lancement de votre get_next_line pour gérer les cas où le fichier ne serait pas ou plus lisible semble causer problème. Utilisez plutôt ``if (read(fd, buffer, BUFFER_SIZE) == -1)`` dans votre boucle de lecture: cela prend en charge le cas ET vous permet de free() le stash proprement.
 
