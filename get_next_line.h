@@ -12,8 +12,9 @@ char		*ft_strdup_(const char *src);
 char		*ft_strjoin_(char const *s1, char const *s2);
 char		*ft_substr_(const char *s, unsigned int start, size_t len);
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
 #endif
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
-#endif
