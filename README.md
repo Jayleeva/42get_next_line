@@ -31,6 +31,7 @@ On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par r
 ## Comment nettoyer une variable allouée qu'on compte réallouer
 - D'abord la free().
 - PUIS lui assigner NULL (ou 0 pour un int).
+
 Si on assigne NULL avant, on ne peut plus la free().
 
 ## Utiliser des temporaires pour réallouer sans leaks
