@@ -66,7 +66,7 @@ Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme
 # Bonus
 Les bonus de ce projet sont, pour une fois, assez accessibles, surtout si votre get_next_line de base est déjà fait avec une seule variable statique. Pour permettre à votre fonction de jongler entre plusieurs fichiers, il suffit de faire de votre statique non pas un `char*` mais bien un `char**`. Ainsi, vous pouvez y stocker les lignes de plusieurs fichiers. Faites les modifications nécessaires dans votre fonction get_next_line(), en précisant ``var_static[fd]`` partout où vous aviez ``var_static`` et en donnant une taille max à votre tableau (= le nombre max de fichiers lisibles en même temps) lors de la déclaration `static char	*var_static[MAX_FD]`, et voilà.
 
-Attention, cela nécessite d'ajouter un `ifndef` à votre header, qui définira la valeur du nombre maximal de fichiers gérables par votre fonction. Ce nombre varie en fonction de l'ordinateur sur lequel elle est appelée. Pour le connaître, utilisez la commande `ulimit -n`.
+Attention, cela nécessite d'ajouter un `ifndef` à votre header, qui définira la valeur de `MAX_FD` (le nombre maximal de fichiers gérables par votre fonction). Ce nombre varie en fonction de l'ordinateur sur lequel elle est appelée. Pour le connaître, utilisez la commande `ulimit -n`.
 
 # ATTENTION
 La difficulté majeure dans ce projet consiste à gérer les **leaks**. N'oubliez pas:
