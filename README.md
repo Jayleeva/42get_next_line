@@ -7,7 +7,7 @@ Projet du 2ème cercle 42
 # read()
 ``read(int fd, char *buffer, int bytes_to_read)``
 
-La fonction read() lit le nombre de bytes reçu en argument depuis le **file descriptor** reçu en argument (identifiant du fichier + mode de lecture sous forme de int) et stocke les bytes lus dans le **buffer** reçu.
+La fonction read() lit le nombre de bytes reçu en argument depuis le **file descriptor** reçu en argument (identifiant du fichier + mode d'accès, sous forme de int) et stocke les bytes lus dans le **buffer** reçu.
 
 En cas d'erreur (le fichier n'est pas ou plus lisible), elle retourne -1. Sinon, elle retourne le nombre de bytes effectivement lus. Ainsi, lorsqu'elle arrive en fin de fichier, elle retourne 0.
 
@@ -24,10 +24,13 @@ On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par r
 - PUIS lui assigner NULL (ou 0 pour un int).
 Si on assigne NULL avant, on ne peut plus la free(). 
 
+# File descriptor
+Indique où lire ou écrire. Jusqu'ici, quand on utilisait write(), on lui donnait toujours comme fd = 1, soit le terminal. Dans ce projet avec read(), on donne comme file descriptor le fichier de notre choix, avec le mode d'accès de notre choix (read only, write only, read and write). 
+Il faut ouvrir le fichier en spécifiant le mode d'accès pour pouvoir utiliser read() ou write() dessus. Ecrire ``file_descriptor = open(file_name, O_RDONLY)`` par ex.
 
 # En gros
 ## Dans le main
-Utiliser **open()** pour ouvrir un fichier en mode lecture seulement: ``open(file_name, O_RDONLY)``. Stocker la valeur dans la variable du file descriptor. Vérifier si cette valeur est valide.
+Utiliser **open()** pour ouvrir un fichier en mode lecture seulement. Stocker la valeur dans la variable du file descriptor. Vérifier si cette valeur est valide.
 
 Appeler **get_next_line()** tant que le fichier n'a pas été lu en entier.
 
