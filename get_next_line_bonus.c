@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-//#include <stdio.h>
 
 static char	*read_line(int fd, char *stash)
 {
