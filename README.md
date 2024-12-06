@@ -5,7 +5,7 @@ Projet du 2ème cercle 42
 **Créer une fonction qui retourne la prochaine ligne d'un fichier passé en argument.**
 
 # read()
-***read(int fd, char *buffer, int bytes_to_read)***
+**read(int fd, char *buffer, int bytes_to_read)***
 
 La fonction read() lit le nombre de bytes reçu en argument depuis le **file descriptor** reçu en argument (identifiant du fichier + mode de lecture sous forme de int) et stocke les bytes lus dans le buffer reçu. 
 En cas d'erreur (le fichier n'est pas ou plus lisible), elle retourne -1. Sinon, elle retourne le nombre de bytes effectivement lus. Ainsi, lorsqu'elle arrive en fin de fichier, elle retourne 0.
