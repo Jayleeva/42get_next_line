@@ -35,9 +35,9 @@ Si on assigne NULL avant, on ne peut plus la free().
 
 ## Utiliser des temporaires pour réallouer sans leaks
 Les temporaires prennent l'adresse actuelle de la variable, et on les free() une fois la nouvelle adresse reçue:
-````temp = allocated_var;
+`temp = allocated_var;
 allocated_var = allocating_memory_function()
-free(temp);````
+free(temp);`
 
 # En gros
 ## Dans le main
