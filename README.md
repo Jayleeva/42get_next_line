@@ -64,16 +64,16 @@ Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la f
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
 ## Dans get_next_line.h
-Si vous devez utiliser plusieurs define (c'est le cas pour ce projet), ils doivent être compris à l'intérieur du define général du header pour passer la norminette. Sinon, elle affiche un message d'erreur et s'arrête.
+Si vous devez utiliser plusieurs define (c'est le cas pour ce projet), ils doivent être compris à l'intérieur du define général du header (avec une indentation en plus) pour passer la norminette. Sinon, elle affiche un message d'erreur et s'arrête.
 ```
-ifndef HEADER_NAME_H
- define HEADER_NAME_H
+# ifndef HEADER_NAME_H
+# define HEADER_NAME_H
 
- ifndef VAR_NAME
-  define VAR_NAME value
- endif
+# ifndef VAR_NAME
+#  define VAR_NAME value
+# endif
 
-endif
+#endif
 ```
 
 # Bonus
