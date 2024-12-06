@@ -4,7 +4,8 @@ Projet du 2ème cercle 42
 # Consignes:
 **Créer une fonction qui retourne la prochaine ligne d'un fichier passé en argument.**
 
-# read()
+# Notions importantes
+## read()
 ``read(int fd, char *buffer, int bytes_to_read)``
 
 La fonction read() lit le nombre de bytes reçu en argument depuis le **file descriptor** reçu en argument (identifiant du fichier + mode d'accès, sous forme de int) et stocke les bytes lus dans le **buffer** reçu.
@@ -15,19 +16,19 @@ Tant que le fichier lu n'est pas fermé, la tête de lecture ("curseur") garde s
 
 Elle ne malloc() et ne free() pas, il faut le faire soi-même (créer un buffer, lui allouer la taille de BUFFER_SIZE, le libérer).
 
-# File descriptor
+## File descriptor
 Indique où lire ou écrire. Jusqu'ici, quand on utilisait write(), on lui donnait toujours comme fd = 1, soit le terminal. Dans ce projet avec read(), on donne comme file descriptor le fichier de notre choix, avec le mode d'accès de notre choix (read only, write only, read and write). 
 
 Il faut ouvrir le fichier en spécifiant le mode d'accès pour pouvoir utiliser read() ou write() dessus. Ecrire ``file_descriptor = open(file_name, O_RDONLY)`` par ex.
 
-# Buffer
+## Buffer
 Variable "tampon" qui permet de stocker temporairement des valeurs entre 2 processus par ex.
 
-# Variable statique
+## Variable statique
 Une variable statique a la particularité de conserver sa valeur d'un appel à l'autre de la fonction où elle est déclarée. Pour déclarer une statique, écrire ``static var_type	var_name;``. 
 On s'en sert dans ce projet pour garder en mémoire les derniers bytes lus par read() après un retour à la ligne ``('\n')``.
 
-# Comment nettoyer une variable statique allouée
+### Comment nettoyer une variable statique allouée
 - D'abord la free().
 - PUIS lui assigner NULL (ou 0 pour un int).
 Si on assigne NULL avant, on ne peut plus la free(). 
