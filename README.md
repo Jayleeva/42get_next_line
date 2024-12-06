@@ -13,7 +13,7 @@ En cas d'erreur (le fichier n'est pas ou plus lisible), elle retourne -1. Sinon,
 
 Tant que le fichier lu n'est pas fermé, la tête de lecture ("curseur") garde sa dernière position d'un appel à l'autre: en appelant read() plusieurs fois de suite avec le même file descriptor, on ne relit pas les mêmes bytes à chaque fois mais bien les suivants. Le nombre de bytes lus à chaque appel dépend de la taille du buffer passée en argument: si le BUFFER_SIZE est à 42, read() lira par tranches de 42 bytes, tant qu'elle n'a pas atteint la fin du fichier ou qu'une erreur se produit.
 
-Elle ne malloc() et ne free() pas, il faut le faire soi-même (créer un buffer, le malloc de la taille de BUFFER_SIZE, le libérer).
+Elle ne malloc() et ne free() pas, il faut le faire soi-même (créer un buffer, lui allouer la taille de BUFFER_SIZE, le libérer).
 
 # File descriptor
 Indique où lire ou écrire. Jusqu'ici, quand on utilisait write(), on lui donnait toujours comme fd = 1, soit le terminal. Dans ce projet avec read(), on donne comme file descriptor le fichier de notre choix, avec le mode d'accès de notre choix (read only, write only, read and write). 
