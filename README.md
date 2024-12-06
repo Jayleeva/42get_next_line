@@ -64,7 +64,7 @@ Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la f
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
 # Bonus
-Les bonus de ce projet sont, pour une fois, assez accessibles. Pour permettre à votre fonction de jongler entre plusieurs fichiers, il suffit de faire de votre statique non pas un `char*` mais bien un `char**`. Ainsi, vous pouvez y stocker les lignes de plusieurs fichiers. Faites les modifications nécessaires dans votre fonction get_next_line(), en précisant ``var_static[fd]`` partout où vous aviez ``var_static`` et en donnant une taille max à votre tableau (= le nombre max de fichiers lisibles en même temps) lors de la déclaration, et voilà.
+Les bonus de ce projet sont, pour une fois, assez accessibles. Pour permettre à votre fonction de jongler entre plusieurs fichiers, il suffit de faire de votre statique non pas un `char*` mais bien un `char**`. Ainsi, vous pouvez y stocker les lignes de plusieurs fichiers. Faites les modifications nécessaires dans votre fonction get_next_line(), en précisant ``var_static[fd]`` partout où vous aviez ``var_static`` et en donnant une taille max à votre tableau (= le nombre max de fichiers lisibles en même temps) lors de la déclaration `static char	*stash[MAX_FD]`, et voilà.
 
 Attention, cela nécessite d'ajouter un ifndef à votre Makefile, qui définira la valeur du nombre maximal de fichiers gérables par votre fonction. Ce nombre varie en fonction de l'ordinateur sur lequel elle est appelée. Pour vous assurer que votre fonction bonus fonctionne sur chaque ordinateur, utilisez .
 
