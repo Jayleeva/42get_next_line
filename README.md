@@ -63,6 +63,19 @@ Utiliser **substr()** pour copier le stash jusqu'au prochain \n ou jusqu'à la f
 
 Utiliser **substr()** pour garder en stash que les bytes lus après un \n. Comme c'est une variable statique, il faut la nettoyer avant de la réutiliser; read reprendra à la fin de stash.
 
+## Dans get_next_line.h
+Si vous devez utiliser plusieurs define (c'est le cas pour ce projet), ils doivent être compris à l'intérieur du define général du header pour passer la norminette. Sinon, elle affiche un message d'erreur et s'arrête.
+```
+ifndef HEADER_NAME_H
+ define HEADER_NAME_H
+
+ ifndef VAR_NAME
+  define VAR_NAME value
+ endif
+
+endif
+```
+
 # Bonus
 Les bonus de ce projet sont, pour une fois, assez accessibles, surtout si votre get_next_line de base est déjà fait avec une seule variable statique. Pour permettre à votre fonction de jongler entre plusieurs fichiers, il suffit de faire de votre statique non pas un `char*` mais bien un `char**`. Ainsi, vous pouvez y stocker les lignes de plusieurs fichiers. Faites les modifications nécessaires dans votre fonction get_next_line(), en précisant ``var_static[fd]`` partout où vous aviez ``var_static`` et en donnant une taille max à votre tableau (= le nombre max de fichiers lisibles en même temps) lors de la déclaration `static char	*var_static[MAX_FD]`, et voilà.
 
