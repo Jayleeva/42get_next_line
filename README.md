@@ -52,7 +52,7 @@ Utiliser **printf()** pour imprimer chaque ligne une à une. Utiliser **free()**
 
 Utiliser **close()** pour fermer le fichier.
 
-## Dans get_next_line
+## Dans get_next_line.c
 Dans une boucle qui tourne tant qu'on n'a pas lu de retour à la ligne ou de fin de fichier, utiliser la fonction **read()** pour stocker les bytes lus dans un buffer. Fermer le buffer en le terminant par un '\0' (sinon, parasitage). En cas d'erreur de read(), **free()** le buffer ET la statique avant de return (NULL).
 
 Utiliser **strjoin()** pour appondre les nouveaux bytes lus aux précédents dans une **variable statique** de type chaîne de caractères (chez moi, "stash"). A prévoir: si la variable statique est vide avant le strjoin(), il faut lui donner une base, par ex. avec **strdup("")**. ATTENTION: ne pas oublier de free() entre les allocations de mémoire.
