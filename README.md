@@ -26,6 +26,7 @@ Si on assigne NULL avant, on ne peut plus la free().
 
 # File descriptor
 Indique où lire ou écrire. Jusqu'ici, quand on utilisait write(), on lui donnait toujours comme fd = 1, soit le terminal. Dans ce projet avec read(), on donne comme file descriptor le fichier de notre choix, avec le mode d'accès de notre choix (read only, write only, read and write). 
+
 Il faut ouvrir le fichier en spécifiant le mode d'accès pour pouvoir utiliser read() ou write() dessus. Ecrire ``file_descriptor = open(file_name, O_RDONLY)`` par ex.
 
 # En gros
