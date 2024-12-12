@@ -12,7 +12,7 @@ La fonction read() lit le nombre de bytes reçu en argument depuis le **file des
 
 En cas d'erreur (= le fichier n'est pas ou plus lisible), elle retourne -1. Sinon, elle retourne le nombre de bytes effectivement lus. Ainsi, lorsqu'elle arrive en fin de fichier, elle retourne 0.
 
-Tant que le fichier lu n'est pas fermé, la tête de lecture ("curseur") garde sa dernière position d'un appel à l'autre: en appelant read() plusieurs fois de suite avec le même file descriptor, on ne relit pas les mêmes bytes à chaque fois mais bien les suivants. Le nombre de bytes lus à chaque appel dépend de la taille du buffer passée en argument: si le BUFFER_SIZE est à 42, read() lira par tranches de 42 bytes, tant qu'elle n'a pas atteint la fin du fichier ou qu'une erreur se produit.
+Tant que le fichier lu n'est pas fermé, la tête de lecture ("curseur") garde sa dernière position d'un appel à l'autre: en appelant read() plusieurs fois de suite avec le même file descriptor, on ne relit pas les mêmes bytes à chaque fois mais bien les suivants. Le nombre de bytes lus à chaque appel dépend de la taille du buffer passée en argument: si le BUFFER_SIZE est à 42, read() lira par tranches de 42 bytes, tant qu'elle n'a pas atteint la fin du fichier ou qu'aucune erreur ne s'est produite.
 
 Elle ne malloc() et ne free() pas, il faut le faire soi-même (créer un buffer, lui allouer la taille de BUFFER_SIZE, le libérer).
 
